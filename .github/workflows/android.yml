@@ -1,7 +1,11 @@
 name: Teste Aetheria
-on: [workflow_dispatch]
+
+on:
+workflow_dispatch:
+
 jobs:
 teste:
 runs-on: ubuntu-latest
 steps:
-- run: echo "Workflow funcionando"
+- name: Testar workflow
+run: echo "Workflow funcionando"
