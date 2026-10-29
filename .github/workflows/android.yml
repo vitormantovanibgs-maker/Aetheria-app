@@ -14,13 +14,37 @@ steps:
   - name: Baixar projeto
     uses: actions/checkout@v4
 
+  - name: Configurar Java
+    uses: actions/setup-java@v4
+    with:
+      distribution: temurin
+      java-version: '21'
+
   - name: Configurar Node.js
     uses: actions/setup-node@v4
     with:
-      node-version: 22
+      node-version: '22'
+      cache: npm
 
   - name: Instalar dependências
     run: npm install
 
-  - name: Compilar projeto web
+  - name: Compilar site
     run: npm run build
+
+  - name: Configurar Android
+    run: |
+      npx cap add android
+      npx cap sync android
+
+  - name: Gerar APK
+    run: |
+      cd android
+      chmod +x gradlew
+      ./gradlew assembleDebug
+
+  - name: Disponibilizar APK
+    uses: actions/upload-artifact@v4
+    with:
+      name: Aetheria-APK
+      path: android/app/build/outputs/apk/debug/app-debug.apk
