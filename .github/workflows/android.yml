@@ -1,11 +1,23 @@
-name: Teste Aetheria
+name: Gerar APK Aetheria
 
 'on':
-  workflow_dispatch:
+workflow_dispatch:
 
 jobs:
-  teste:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Testar
-        run: echo "Funcionando"
+build:
+runs-on: ubuntu-latest
+
+steps:
+  - name: Baixar projeto
+    uses: actions/checkout@v4
+
+  - name: Configurar Node.js
+    uses: actions/setup-node@v4
+    with:
+      node-version: 20
+
+  - name: Instalar dependências
+    run: npm install
+
+  - name: Compilar site
+    run: npm run build
