@@ -1,6 +1,6 @@
 name: Build Aetheria APK
 
-on:
+'on':
 workflow_dispatch:
 push:
 branches:
@@ -9,10 +9,9 @@ branches:
 jobs:
 build:
 runs-on: ubuntu-latest
-
 steps:
-  - name: Baixar projeto
-    uses: actions/checkout@v4
+- name: Baixar projeto
+uses: actions/checkout@v4
 
   - name: Configurar Java
     uses: actions/setup-java@v4
@@ -24,7 +23,6 @@ steps:
     uses: actions/setup-node@v4
     with:
       node-version: '22'
-      cache: npm
 
   - name: Instalar dependências
     run: npm install
