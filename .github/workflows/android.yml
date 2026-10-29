@@ -10,38 +10,39 @@ jobs:
 build:
 runs-on: ubuntu-latest
 steps:
-- name: Baixar projeto
+- name: Checkout
 uses: actions/checkout@v4
 
-  - name: Configurar Java
+  - name: Setup Node
+    uses: actions/setup-node@v4
+    with:
+      node-version: 22
+
+  - name: Install dependencies
+    run: npm install
+
+  - name: Build web app
+    run: npm run build
+
+  - name: Setup Java
     uses: actions/setup-java@v4
     with:
       distribution: temurin
       java-version: '21'
 
-  - name: Configurar Node.js
-    uses: actions/setup-node@v4
-    with:
-      node-version: '22'
+  - name: Add Android platform
+    run: npx cap add android
 
-  - name: Instalar dependências
-    run: npm install
+  - name: Sync Android
+    run: npx cap sync android
 
-  - name: Compilar site
-    run: npm run build
-
-  - name: Configurar Android
-    run: |
-      npx cap add android
-      npx cap sync android
-
-  - name: Gerar APK
+  - name: Build APK
     run: |
       cd android
       chmod +x gradlew
       ./gradlew assembleDebug
 
-  - name: Disponibilizar APK
+  - name: Upload APK
     uses: actions/upload-artifact@v4
     with:
       name: Aetheria-APK
