@@ -1,9 +1,11 @@
-name: Teste
+name: Teste Aetheria
 
-on: workflow_dispatch
+'on':
+  workflow_dispatch:
 
 jobs:
   teste:
     runs-on: ubuntu-latest
     steps:
-      - run: echo teste
+      - name: Testar
+        run: echo "Funcionando"
